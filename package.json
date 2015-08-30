@@ -1,0 +1,17 @@
+{
+  "name": "gamemaker-server",
+  "version": "0.0.1",
+  "description": "Server library for working with Gamemaker's Network system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Barrett <twisterghost@gmail.com> (http://hellote.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^3.10.1"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23"
+  }
+}
