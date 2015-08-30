@@ -21,7 +21,7 @@ class Socket {
 
       this.dataHandlers.forEach(handler => {
         handler(dataAsObject);
-      })
+      });
     });
 
     this.send({

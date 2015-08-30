@@ -22,7 +22,7 @@ class ClientManager {
       this.handleIncomingCommand(clientSocket, data);
     });
 
-    clientSocket.on('close', hadError => {
+    clientSocket.on('close', () => {
       this.removeClient(clientSocket.socketId);
     });
 

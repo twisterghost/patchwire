@@ -3,7 +3,7 @@ var ClientManager = require('./lib/clientManager.js');
 
 var commandHandlers = {
 
-  register: function(socket, data) {
+  register: function(socket) {
     var playerId = Date.now().toString();
     socket.set('playerId', playerId);
 
