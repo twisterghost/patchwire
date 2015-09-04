@@ -47,6 +47,13 @@ class Client {
     this.socket.write(jsonToSend);
   }
 
+  batchSend(commandList) {
+    this.send({
+      batch: true,
+      commands: commandList
+    });
+  }
+
   set(key, value) {
     this.data[key] = value;
   }
