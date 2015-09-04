@@ -8,6 +8,7 @@
     "lint": "./node_modules/eslint/bin/eslint.js src example.js",
     "test": "npm run build && ./node_modules/mocha/bin/mocha test"
   },
+  "files": ["index.js", "lib"],
   "author": "Michael Barrett <twisterghost@gmail.com> (http://hellote.com/)",
   "license": "MIT",
   "dependencies": {

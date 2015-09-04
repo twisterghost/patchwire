@@ -2,7 +2,7 @@ var _ = require('lodash');
 const TERMINATING_CHARACTER = '\0';
 const DEBUG_MODE = process.env.GM_SERVER_DEBUG === 'true';
 
-class Socket {
+class Client {
 
   constructor(socket) {
     this.socket = socket;
@@ -13,7 +13,7 @@ class Socket {
 
     socket.on('data', data => {
 
-      const dataAsObject = Socket.getObjectFromRaw(data);
+      const dataAsObject = Client.getObjectFromRaw(data);
 
       if (DEBUG_MODE) {
         console.info(this.socketId, ' received: ', JSON.stringify(dataAsObject));
@@ -73,4 +73,4 @@ class Socket {
 
 }
 
-module.exports = Socket;
+module.exports = Client;

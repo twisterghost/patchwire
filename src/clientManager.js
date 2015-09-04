@@ -6,6 +6,7 @@ class ClientManager {
     this.clients = [];
     this.commandHandlers = {};
     this.eventHandlers = {};
+    this.persistedData = {};
   }
 
   getClients() {
@@ -16,6 +17,14 @@ class ClientManager {
     return this.clients.length;
   }
 
+  set(key, value) {
+    this.persistedData[key] = value;
+  }
+
+  get(key) {
+    return this.persistedData[key];
+  }
+
   addClient(clientSocket) {
 
     clientSocket.onData(data => {
@@ -23,6 +32,7 @@ class ClientManager {
     });
 
     clientSocket.on('close', () => {
+      this.fire('clientDropped', clientSocket);
       this.removeClient(clientSocket.socketId);
     });
 
@@ -40,11 +50,21 @@ class ClientManager {
         return index;
       }
     });
-    _.pullAt(this.clients, removeIndex);
-    this.fire('clientRemoved', clientSocketId);
+    var removed = _.pullAt(this.clients, removeIndex);
+
+    if (removed.length > 0) {
+      return removed[0];
+    }
   }
 
-  broadcast(data) {
+  broadcast(command, data) {
+
+    if (typeof data === 'undefined') {
+      data = command;
+    } else {
+      data.command = command;
+    }
+
     this.clients.forEach(client => {
       client.send(data);
     });
@@ -65,7 +85,7 @@ class ClientManager {
   addCommandListener(command, handler) {
     // If there is a command listener for this command already, push.
     if (this.commandHandlers.hasOwnProperty(command)) {
-      this.commandHandlers.push(handler);
+      this.commandHandlers[command].push(handler);
     } else {
       this.commandHandlers[command] = [handler];
     }

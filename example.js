@@ -1,5 +1,5 @@
-var GMServer = require('./lib/server.js');
-var ClientManager = require('./lib/clientManager.js');
+var GMServer = require('./index.js').Server;
+var ClientManager = require('./index.js').ClientManager;
 
 var commandHandlers = {
 

@@ -1,7 +1,7 @@
 var assert = require('chai').assert;
 var sinon = require('sinon');
-var Socket = require('../lib/socket.js');
-var socket;
+var Client = require('../lib/client.js');
+var client;
 
 function getFakeNetSocket() {
   return {
@@ -10,15 +10,15 @@ function getFakeNetSocket() {
   };
 };
 
-describe('Socket', function() {
+describe('Client', function() {
 
   beforeEach(function() {
-    socket = new Socket(getFakeNetSocket());
+    client = new Client(getFakeNetSocket());
   });
 
   it('can store and retrieve aribtrary data', function() {
-    socket.set('test', 'testData');
-    assert.equal(socket.get('test'), 'testData');
+    client.set('test', 'testData');
+    assert.equal(client.get('test'), 'testData');
   });
 
 });
