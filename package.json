@@ -1,7 +1,7 @@
 {
-  "name": "gamemaker-server",
+  "name": "stormwind",
   "version": "0.0.1",
-  "description": "Server library for working with Gamemaker's Network system",
+  "description": "Multiplayer game server framework for Node.js",
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/babel/bin/babel.js src -d lib",
@@ -12,7 +12,7 @@
   "author": "Michael Barrett <twisterghost@gmail.com> (http://hellote.com/)",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^3.10.1"
+    "lodash": "3.10.1"
   },
   "devDependencies": {
     "babel": "^5.8.23",
