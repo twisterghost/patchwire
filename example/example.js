@@ -1,5 +1,5 @@
-var GMServer = require('./index.js').Server;
-var ClientManager = require('./index.js').ClientManager;
+var GMServer = require('../index.js').Server;
+var ClientManager = require('../index.js').ClientManager;
 
 var commandHandlers = {
 
