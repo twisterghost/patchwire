@@ -1,12 +1,12 @@
-var Socket = require('./socket.js');
+var Client = require('./client.js');
 var net = require('net');
 
 class Server {
 
   constructor(socketHandler) {
     this.netServer = net.createServer(function(rawSocket) {
-      var clientSocket = new Socket(rawSocket);
-      socketHandler(clientSocket);
+      var client = new Client(rawSocket);
+      socketHandler(client);
     });
   }
 
