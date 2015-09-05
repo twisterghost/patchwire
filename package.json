@@ -6,17 +6,27 @@
   "scripts": {
     "build": "node ./node_modules/babel/bin/babel.js src -d lib",
     "lint": "node ./node_modules/eslint/bin/eslint.js src example.js",
-    "test": "npm run build && node ./node_modules/mocha/bin/mocha test"
+    "test": "npm run build && node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha test",
+    "check-coverage": "node ./node_modules/istanbul/lib/cli.js check-coverage --statement 90",
+    "ci": "npm run coverage && npm run check-coverage"
   },
-  "keywords": ["server", "socket", "multiplayer", "game"],
-  "repository" : {
+  "keywords": [
+    "server",
+    "socket",
+    "multiplayer",
+    "game"
+  ],
+  "repository": {
     "type": "git",
     "url": "https://github.com/twisterghost/patchwire.git"
   },
   "bugs": {
     "url": "https://github.com/twisterghost/patchwire/issues"
   },
-  "files": ["index.js", "lib"],
+  "files": [
+    "index.js",
+    "lib"
+  ],
   "author": "Michael Barrett <twisterghost@gmail.com> (http://hellote.com/)",
   "license": "MIT",
   "dependencies": {
@@ -26,6 +36,7 @@
     "babel": "^5.8.23",
     "chai": "^3.2.0",
     "mocha": "^2.2.5",
-    "sinon": "^1.16.1"
+    "sinon": "^1.16.1",
+    "istanbul": "^0.3.19"
   }
 }
