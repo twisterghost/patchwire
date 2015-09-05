@@ -1,12 +1,20 @@
 {
   "name": "patchwire",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Multiplayer game server framework for Node.js",
   "main": "index.js",
   "scripts": {
     "build": "node ./node_modules/babel/bin/babel.js src -d lib",
     "lint": "node ./node_modules/eslint/bin/eslint.js src example.js",
     "test": "npm run build && node ./node_modules/mocha/bin/mocha test"
+  },
+  "keywords": ["server", "socket", "multiplayer", "game"],
+  "repository" : {
+    "type": "git",
+    "url": "https://github.com/twisterghost/patchwire.git"
+  },
+  "bugs": {
+    "url": "https://github.com/twisterghost/patchwire/issues"
   },
   "files": ["index.js", "lib"],
   "author": "Michael Barrett <twisterghost@gmail.com> (http://hellote.com/)",
