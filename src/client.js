@@ -7,7 +7,7 @@ class Client {
   constructor(socket) {
     this.socket = socket;
     this.dataHandlers = [];
-    this.socketId = _.uniqueId();
+    this.clientId = _.uniqueId();
     this.created = Date.now();
     this.data = {};
 
@@ -16,7 +16,7 @@ class Client {
       const dataAsObject = Client.getObjectFromRaw(data);
 
       if (DEBUG_MODE) {
-        console.info(this.socketId, ' received: ', JSON.stringify(dataAsObject));
+        console.info(this.clientId, ' received: ', JSON.stringify(dataAsObject));
       }
 
       this.dataHandlers.forEach(handler => {
@@ -41,7 +41,7 @@ class Client {
     const jsonToSend = JSON.stringify(data);
 
     if (DEBUG_MODE) {
-      console.info(this.socketId, ' is sending: ', jsonToSend);
+      console.info(this.clientId, ' is sending: ', jsonToSend);
     }
 
     this.socket.write(jsonToSend);

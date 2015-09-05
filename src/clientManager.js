@@ -25,28 +25,28 @@ class ClientManager {
     return this.persistedData[key];
   }
 
-  addClient(clientSocket) {
+  addClient(client) {
 
-    clientSocket.onData(data => {
-      this.handleIncomingCommand(clientSocket, data);
+    client.onData(data => {
+      this.handleIncomingCommand(client, data);
     });
 
-    clientSocket.on('close', () => {
-      this.fire('clientDropped', clientSocket);
-      this.removeClient(clientSocket.socketId);
+    client.on('close', () => {
+      this.fire('clientDropped', client);
+      this.removeClient(client.socketId);
     });
 
-    clientSocket.on('error', error => {
+    client.on('error', error => {
       console.error(error);
     });
 
-    this.clients.push(clientSocket);
-    this.fire('clientAdded', clientSocket);
+    this.clients.push(client);
+    this.fire('clientAdded', client);
   }
 
-  removeClient(clientSocketId) {
+  removeClient(clientId) {
     var removeIndex = _.map(this.clients, (client, index) => {
-      if (client.socketId === clientSocketId) {
+      if (client.socketId === clientId) {
         return index;
       }
     });
@@ -54,6 +54,8 @@ class ClientManager {
 
     if (removed.length > 0) {
       return removed[0];
+    } else {
+      return undefined;
     }
   }
 
@@ -70,12 +72,12 @@ class ClientManager {
     });
   }
 
-  handleIncomingCommand(socket, data) {
-    this.fire('commandReceived', {socket: socket, data: data});
+  handleIncomingCommand(client, data) {
+    this.fire('commandReceived', {client: client, data: data});
 
     if (this.commandHandlers.hasOwnProperty(data.command)) {
       this.commandHandlers[data.command].forEach(handler => {
-        handler(socket, data);
+        handler(client, data);
       });
     } else {
       console.warn('No handler defiend for: ', data.command);
