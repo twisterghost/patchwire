@@ -8,7 +8,7 @@
     "lint": "node ./node_modules/eslint/bin/eslint.js src example.js",
     "test": "npm run build && node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha test",
     "check-coverage": "node ./node_modules/istanbul/lib/cli.js check-coverage --statement 90",
-    "ci": "npm run coverage && npm run check-coverage"
+    "ci": "npm run test && npm run check-coverage"
   },
   "keywords": [
     "server",
