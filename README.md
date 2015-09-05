@@ -27,6 +27,10 @@ var server = new Server(function(client) {
 server.listen(3001);
 ```
 
+## Documentation
+
+You can find all of the documentation for Patchwire at [the wiki for patchwire](https://github.com/twisterghost/patchwire/wiki)
+
 ## About
 
 Patchwire is a server framework designed for multiplayer games. Originally built to work with GameMaker: Studio's networking code, it has been standardized to be unassuming about the client end framework.
