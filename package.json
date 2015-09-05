@@ -1,12 +1,12 @@
 {
-  "name": "stormwind",
+  "name": "patchwire",
   "version": "0.0.1",
   "description": "Multiplayer game server framework for Node.js",
   "main": "index.js",
   "scripts": {
-    "build": "./node_modules/babel/bin/babel.js src -d lib",
-    "lint": "./node_modules/eslint/bin/eslint.js src example.js",
-    "test": "npm run build && ./node_modules/mocha/bin/mocha test"
+    "build": "node ./node_modules/babel/bin/babel.js src -d lib",
+    "lint": "node ./node_modules/eslint/bin/eslint.js src example.js",
+    "test": "npm run build && node ./node_modules/mocha/bin/mocha test"
   },
   "files": ["index.js", "lib"],
   "author": "Michael Barrett <twisterghost@gmail.com> (http://hellote.com/)",

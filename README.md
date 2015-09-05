@@ -1,16 +1,16 @@
-# Stormwind
+# Patchwire
 Multiplayer game server framework for Node.js
 
 ## Quick Start
 
 ### Install
-`npm install stormwind`
+`npm install patchwire`
 
 ### Use
 ```JavaScript
 // MyGameServer.js
-var Server = require('../index.js').Server;
-var ClientManager = require('../index.js').ClientManager;
+var Server = require('patchwire').Server;
+var ClientManager = require('patchwire').ClientManager;
 
 var server = new Server();
 var gameLobby = new ClientManager();
@@ -29,13 +29,9 @@ server.listen(3001);
 
 ## About
 
-Stormwind is a server framework designed for multiplayer games. Originally built to work
-with GameMaker: Studio's networking code, it has been standardized to be unassuming about
-the client end framework.
+Patchwire is a server framework designed for multiplayer games. Originally built to work with GameMaker: Studio's networking code, it has been standardized to be unassuming about the client end framework.
 
-Stormwind uses a paradigm of sending "commands" to clients, and in turn, listening for
-commands from the client. A command is nothing more than a string identifier, and some
-data. A command looks like this:
+Patchwire uses a paradigm of sending "commands" to clients, and in turn, listening for commands from the client. A command is nothing more than a string identifier, and some data. A command looks like this:
 
 ```JavaScript
 {
@@ -47,7 +43,4 @@ data. A command looks like this:
 
 ## Client Side
 
-Stormwind speaks JSON via a networking socket. All you need to connect to a Stormwind server
-is the ability to connect to a socket. Currently, Stormwind only has official support for
-GameMaker as a client library, the code for which can be found
-[here](https://github.com/twisterghost/stormwind-gm)
+Patchwire speaks JSON via a networking socket. All you need to connect to a Patchwire server is the ability to connect to a socket. Currently, Patchwire only has official support for GameMaker as a client library, the code for which can be found [here](https://github.com/twisterghost/patchwire-gm)
