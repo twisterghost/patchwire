@@ -73,7 +73,12 @@ class Client {
   static getObjectFromRaw(data) {
     const rawSocketDataString = data.toString('ascii');
     const terminatingIndex = rawSocketDataString.indexOf(TERMINATING_CHARACTER);
-    const trimmedData = rawSocketDataString.substr(0, terminatingIndex);
+    var trimmedData;
+    if (terminatingIndex > -1) {
+      trimmedData = rawSocketDataString.substr(0, terminatingIndex);
+    } else {
+      trimmedData = rawSocketDataString;
+    }
     const objectFromData = JSON.parse(trimmedData);
     return objectFromData;
   }
