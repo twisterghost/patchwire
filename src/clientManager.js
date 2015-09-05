@@ -1,4 +1,5 @@
 var _ = require('lodash');
+const DEBUG_MODE = process.env.GM_SERVER_DEBUG === 'true';
 
 class ClientManager {
 
@@ -45,12 +46,10 @@ class ClientManager {
   }
 
   removeClient(clientId) {
-    var removeIndex = _.map(this.clients, (client, index) => {
-      if (client.socketId === clientId) {
-        return index;
-      }
+
+    var removed = _.remove(this.clients, function(client) {
+      return client.clientId === clientId;
     });
-    var removed = _.pullAt(this.clients, removeIndex);
 
     if (removed.length > 0) {
       return removed[0];
@@ -79,7 +78,7 @@ class ClientManager {
       this.commandHandlers[data.command].forEach(handler => {
         handler(client, data);
       });
-    } else {
+    } else if (DEBUG_MODE) {
       console.warn('No handler defiend for: ', data.command);
     }
   }
