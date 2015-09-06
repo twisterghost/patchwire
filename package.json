@@ -1,6 +1,6 @@
 {
   "name": "patchwire",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Multiplayer game server framework for Node.js",
   "main": "index.js",
   "scripts": {
