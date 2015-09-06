@@ -34,7 +34,7 @@ class ClientManager {
 
     client.on('close', () => {
       this.fire('clientDropped', client);
-      this.removeClient(client.socketId);
+      this.removeClient(client.clientId);
     });
 
     client.on('error', error => {

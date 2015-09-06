@@ -131,4 +131,28 @@ describe('Client Manager', function() {
 
   });
 
+  describe('event: clientDropped', function() {
+
+    it('removes the dropped client', function() {
+      var fakeClient = {
+        on: function(event, handler) {
+          if (event === 'close') {
+            this.onCloseHandler = handler;
+          }
+        },
+        onData: sinon.stub(),
+        send: sinon.stub(),
+        clientId: _.random(0, 200)
+      };
+
+      clientManager.addClient(fakeClient);
+      assert.isFunction(fakeClient.onCloseHandler, 'a close handler was never set');
+      fakeClient.onCloseHandler();
+      var clientCount = clientManager.getClientCount();
+      assert.equal(clientCount, 0);
+
+    });
+
+  });
+
 });
