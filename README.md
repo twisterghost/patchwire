@@ -1,6 +1,8 @@
 # Patchwire
 Multiplayer game server framework for Node.js
 
+[![Circle CI](https://img.shields.io/circleci/project/twisterghost/patchwire/master.svg)](https://circleci.com/gh/twisterghost/patchwire)
+
 ## Quick Start
 
 ### Install
