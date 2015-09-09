@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 const DEBUG_MODE = process.env.GM_SERVER_DEBUG === 'true';
 

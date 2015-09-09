@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 const TERMINATING_CHARACTER = '\0';
 const DEBUG_MODE = process.env.GM_SERVER_DEBUG === 'true';

@@ -1,3 +1,5 @@
+'use strict';
+
 var Client = require('./client.js');
 var net = require('net');
 
