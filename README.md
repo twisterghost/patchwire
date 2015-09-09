@@ -47,6 +47,14 @@ Patchwire uses a paradigm of sending "commands" to clients, and in turn, listeni
 }
 ```
 
-## Client Side
+## Clients
 
-Patchwire speaks JSON via a networking socket. All you need to connect to a Patchwire server is the ability to connect to a socket. Currently, Patchwire only has official support for GameMaker as a client library, the code for which can be found [here](https://github.com/twisterghost/patchwire-gm)
+Patchwire is unassuming about the client side as it speaks primarily through JSON strings encoded over the wire. If you do not see your preferred client side below, creating your own client package is strongly encouraged, as Patchwire is built to be as easy as possible to implement. More client packages will come over time.
+
+### List of client packages:
+
+* [GameMaker: Studio](https://github.com/twisterghost/patchwire-gm)
+
+### Client packages in development:
+
+* Node.js
