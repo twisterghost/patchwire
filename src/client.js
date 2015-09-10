@@ -51,13 +51,15 @@ class Client {
       throw new Error('Cannot tick when not in tick mode');
     }
 
-    var command = {
-      batch: true,
-      commands: this.tickModeQueue
-    };
+    if (this.tickModeQueue.length !== 0) {
+      var command = {
+        batch: true,
+        commands: this.tickModeQueue
+      };
 
-    this.directSend(command);
-    this.tickModeQueue = [];
+      this.directSend(command);
+      this.tickModeQueue = [];
+    }
   }
 
   /**

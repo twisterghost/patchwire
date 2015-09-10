@@ -9,7 +9,8 @@ function getFakeClient() {
     on: function() {},
     onData: function() {},
     send: sinon.stub(),
-    clientId: _.uniqueId()
+    clientId: _.uniqueId(),
+    setTickMode: sinon.stub()
   };
 }
 
@@ -142,7 +143,8 @@ describe('Client Manager', function() {
         },
         onData: sinon.stub(),
         send: sinon.stub(),
-        clientId: _.random(0, 200)
+        clientId: _.random(0, 200),
+        setTickMode: sinon.stub()
       };
 
       clientManager.addClient(fakeClient);

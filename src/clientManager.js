@@ -1,6 +1,8 @@
 'use strict';
 
 var _ = require('lodash');
+const ONE_SECOND = 1000;
+const DEFAULT_TICKS_PER_SECOND = 60;
 const DEBUG_MODE = process.env.GM_SERVER_DEBUG === 'true';
 
 class ClientManager {
@@ -10,6 +12,9 @@ class ClientManager {
     this.commandHandlers = {};
     this.eventHandlers = {};
     this.persistedData = {};
+    this.tickMode = false;
+    this.tickRate = ONE_SECOND / DEFAULT_TICKS_PER_SECOND;
+    this.tickInterval;
   }
 
   getClients() {
@@ -29,6 +34,8 @@ class ClientManager {
   }
 
   addClient(client) {
+
+    client.setTickMode(this.tickMode);
 
     client.onData(data => {
       this.handleIncomingCommand(client, data);
@@ -113,6 +120,48 @@ class ClientManager {
         }
       });
     }
+  }
+
+  setTickMode(onOff) {
+    this.tickMode = onOff;
+
+    this.clients.forEach(function(client) {
+      client.setTickMode(onOff);
+    });
+
+    if (onOff === false) {
+      this.stopTicking();
+    }
+  }
+
+  setTickRate(newTickRate) {
+
+    if (this.tickInterval) {
+      throw new Error('Cannot change tick rate while already ticking. Call stopTicking() first.');
+    }
+
+    this.tickRate = newTickRate;
+  }
+
+  startTicking() {
+    if (!this.tickMode) {
+      throw new Error('Cannot begin ticking when not in tick mode. use setTickMode(true) first.');
+    } else if (this.tickInterval) {
+      throw new Error('Cannot start ticking when already ticking. Call stopTicking() first.');
+    }
+
+    this.tickInterval = setInterval(this.tick.bind(this), this.tickRate);
+  }
+
+  stopTicking() {
+    clearInterval(this.tickInterval);
+    this.tickInterval = undefined;
+  }
+
+  tick() {
+    this.clients.forEach(function(client) {
+      client.tick();
+    });
   }
 
 }
