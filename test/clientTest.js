@@ -167,7 +167,14 @@ describe('Client', function() {
   describe('.tick', function() {
 
     it('throws an error when not in tick mode', function() {
-      assert.throws(client.tick, Error);
+      var error;
+      try {
+        client.tick();
+      } catch (e) {
+        error = e;
+      }
+
+      assert.instanceOf(error, Error);
     });
 
     it('does not send anything when nothing has been queued', function() {
