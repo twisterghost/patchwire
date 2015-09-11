@@ -3,12 +3,10 @@ Multiplayer game server framework for Node.js
 
 [![Circle CI](https://circleci.com/gh/twisterghost/patchwire.svg?style=svg)](https://circleci.com/gh/twisterghost/patchwire)
 
-## Quick Start
-
-### Install
+## Install
 `npm install patchwire`
 
-### Use
+## Use
 ```JavaScript
 // MyGameServer.js
 var Server = require('patchwire').Server;
@@ -31,7 +29,7 @@ server.listen(3001);
 
 ## Documentation
 
-You can find all of the documentation for Patchwire at [the wiki for patchwire](https://github.com/twisterghost/patchwire/wiki)
+See [the patchwire Github wiki](https://github.com/twisterghost/patchwire/wiki)
 
 ## About
 
