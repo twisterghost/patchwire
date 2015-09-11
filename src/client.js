@@ -35,34 +35,6 @@ class Client {
   }
 
   /**
-   * Sets tick mode on or off.
-   * @param {boolean} onOff
-   */
-  setTickMode(onOff) {
-    this.tickMode = onOff;
-  }
-
-  /**
-   * Sends all stored commands when in tick mode
-   */
-  tick() {
-
-    if (!this.tickMode) {
-      throw new Error('Cannot tick when not in tick mode');
-    }
-
-    if (this.tickModeQueue.length !== 0) {
-      var command = {
-        batch: true,
-        commands: this.tickModeQueue
-      };
-
-      this.directSend(command);
-      this.tickModeQueue = [];
-    }
-  }
-
-  /**
    * Sends a command. Command string is optional
    * @param {string} command
    * @param {object} data
@@ -147,6 +119,34 @@ class Client {
    */
   onData(handler) {
     this.dataHandlers.push(handler);
+  }
+
+  /**
+   * Sets tick mode on or off.
+   * @param {boolean} onOff
+   */
+  setTickMode(onOff) {
+    this.tickMode = onOff;
+  }
+
+  /**
+   * Sends all stored commands when in tick mode
+   */
+  tick() {
+
+    if (!this.tickMode) {
+      throw new Error('Cannot tick when not in tick mode');
+    }
+
+    if (this.tickModeQueue.length !== 0) {
+      var command = {
+        batch: true,
+        commands: this.tickModeQueue
+      };
+
+      this.directSend(command);
+      this.tickModeQueue = [];
+    }
   }
 
   /**
