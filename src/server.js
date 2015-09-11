@@ -12,6 +12,11 @@ class Server {
     });
   }
 
+  /**
+   * Opens the server on the given port. Calls back when the server is open.
+   * @param  {number}   port     The port to listen to
+   * @param  {Function} callback The callback to run when open
+   */
   listen(port, callback) {
     this.netServer.listen(port, callback);
   }

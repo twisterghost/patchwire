@@ -10,7 +10,7 @@ function getFakeNetSocket() {
     on: sinon.stub(),
     write: sinon.stub()
   };
-};
+}
 
 describe('Client', function() {
 
@@ -146,6 +146,71 @@ describe('Client', function() {
         assert(handler.calledWith(JSON.stringify({command: 'test'})));
       });
 
+    });
+
+  });
+
+  describe('.setTickMode', function() {
+
+    it('sets the tick mode on or off', function() {
+
+      client.setTickMode(true);
+      assert.isTrue(client.tickMode);
+
+      client.setTickMode(false);
+      assert.isFalse(client.tickMode);
+
+    });
+
+  });
+
+  describe('.tick', function() {
+
+    it('throws an error when not in tick mode', function() {
+      var error;
+      try {
+        client.tick();
+      } catch (e) {
+        error = e;
+      }
+
+      assert.instanceOf(error, Error);
+    });
+
+    it('does not send anything when nothing has been queued', function() {
+      client.setTickMode(true);
+      client.tick();
+
+      // Using .calledOnce to assert that only the 'connected' write happened.
+      assert.isTrue(fakeSocket.write.calledOnce);
+    });
+
+    it('sends all queued commands', function() {
+      client.setTickMode(true);
+      client.send({command: 'test'});
+      client.send({command: 'test2'});
+      client.send({
+        batch: true,
+        commands: [
+          {
+            command: 'test3'
+          },
+          {
+            command: 'test4'
+          }
+        ]
+      });
+
+      client.tick();
+
+      assert.isTrue(fakeSocket.write.calledTwice);
+
+      var sentObject = JSON.parse(fakeSocket.write.args[1]);
+      assert.isTrue(sentObject.batch);
+      assert.equal(sentObject.commands[0].command, 'test');
+      assert.equal(sentObject.commands[1].command, 'test2');
+      assert.equal(sentObject.commands[2].command, 'test3');
+      assert.equal(sentObject.commands[3].command, 'test4');
     });
 
   });

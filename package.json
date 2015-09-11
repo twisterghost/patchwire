@@ -1,11 +1,11 @@
 {
   "name": "patchwire",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Multiplayer game server framework for Node.js",
   "main": "index.js",
   "scripts": {
     "build": "node ./node_modules/babel/bin/babel.js src -d lib",
-    "lint": "node ./node_modules/eslint/bin/eslint.js src example",
+    "lint": "node ./node_modules/eslint/bin/eslint.js src example test",
     "test": "npm run build && node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha test",
     "check-coverage": "node ./node_modules/istanbul/lib/cli.js check-coverage --statement 85",
     "ci": "npm run lint && npm run test && npm run check-coverage"
