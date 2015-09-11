@@ -231,6 +231,7 @@ class ClientManager {
    * Calls tick() on every Client in this ClientManager, sending out all stored commands.
    */
   tick() {
+    this.fire('tick');
     this.clients.forEach(function(client) {
       client.tick();
     });
