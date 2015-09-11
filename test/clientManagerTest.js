@@ -137,7 +137,7 @@ describe('Client Manager', function() {
       assert(fakeSocket.send.called);
       assert(fakeSocket2.send.called);
       assert.equal(fakeSocket.send.firstCall.args[0].command, 'somecommand');
-    })
+    });
 
   });
 
@@ -148,7 +148,7 @@ describe('Client Manager', function() {
       clientManager.on('testEvent', stub);
       clientManager.fire('testEvent');
       assert(stub.called);
-    })
+    });
 
   });
 
@@ -174,7 +174,7 @@ describe('Client Manager', function() {
 
       assert.isFalse(clientManager.tickMode);
 
-      var managedClients = clientManager.getClients();
+      managedClients = clientManager.getClients();
       managedClients.forEach(function(client) {
         assert.isFalse(client.tickMode);
       });

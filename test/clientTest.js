@@ -10,7 +10,7 @@ function getFakeNetSocket() {
     on: sinon.stub(),
     write: sinon.stub()
   };
-};
+}
 
 describe('Client', function() {
 
@@ -199,7 +199,8 @@ describe('Client', function() {
             command: 'test4'
           }
         ]
-      })
+      });
+
       client.tick();
 
       assert.isTrue(fakeSocket.write.calledTwice);
