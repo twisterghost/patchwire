@@ -51,6 +51,7 @@ Patchwire is unassuming about the client side as it speaks primarily through JSO
 
 ### List of client packages:
 
+* [iOS](https://github.com/VictorBX/patchwire-ios)
 * [GameMaker: Studio](https://github.com/twisterghost/patchwire-gm)
 
 ### Client packages in development:
