@@ -4,10 +4,9 @@
   "description": "Multiplayer game server framework for Node.js",
   "main": "index.js",
   "scripts": {
-    "build": "node ./node_modules/babel/bin/babel.js src -d lib",
-    "lint": "node ./node_modules/eslint/bin/eslint.js src example test",
-    "test": "npm run build && node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha test",
-    "check-coverage": "node ./node_modules/istanbul/lib/cli.js check-coverage --statement 85",
+    "lint": "node ./node_modules/eslint/bin/eslint.js lib example test",
+    "test": "istanbul cover _mocha",
+    "check-coverage": "istanbul check-coverage --statement 85",
     "ci": "npm run lint && npm run test && npm run check-coverage"
   },
   "keywords": [
@@ -30,10 +29,9 @@
   "author": "Michael Barrett <twisterghost@gmail.com> (http://hellote.com/)",
   "license": "MIT",
   "dependencies": {
-    "lodash": "3.10.1"
+    "lodash": "4.8.2"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
     "chai": "^3.2.0",
     "eslint": "^1.3.1",
     "mocha": "^2.2.5",
