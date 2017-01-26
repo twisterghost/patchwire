@@ -9,7 +9,6 @@ Multiplayer game server framework for Node.js
 ## Use
 ```JavaScript
 // MyGameServer.js
-var Server = require('patchwire').Server;
 var ClientManager = require('patchwire').ClientManager;
 
 var server = new Server();
@@ -51,9 +50,6 @@ Patchwire is unassuming about the client side as it speaks primarily through JSO
 
 ### List of client packages:
 
-* [iOS](https://github.com/VictorBX/patchwire-ios)
 * [GameMaker: Studio](https://github.com/twisterghost/patchwire-gm)
+* [iOS](https://github.com/VictorBX/patchwire-ios)
 
-### Client packages in development:
-
-* Node.js
