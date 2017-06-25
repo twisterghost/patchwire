@@ -1,9 +1,9 @@
-var assert = require('chai').assert;
-var sinon = require('sinon');
-var Client = require('../lib/client.js');
-var _ = require('lodash');
-var client;
-var fakeSocket;
+const assert = require('chai').assert;
+const sinon = require('sinon');
+const Client = require('../lib/client.js');
+const _ = require('lodash');
+let client;
+let fakeSocket;
 
 function getFakeNetSocket() {
   return {
@@ -36,7 +36,7 @@ describe('Client', function() {
 
     it('sends a command over the wire', function() {
 
-      var commandObject = {
+      const commandObject = {
         command: 'test',
         hello: 'world'
       };
@@ -50,7 +50,7 @@ describe('Client', function() {
 
     it('includes the command name if one is provided', function() {
 
-      var commandObject = {
+      const commandObject = {
         hello: 'world'
       };
 
@@ -69,7 +69,7 @@ describe('Client', function() {
 
     it('sends every command in an array', function() {
 
-      var commands = _.times(_.random(5, 10), function(index) {
+      const commands = _.times(_.random(5, 10), function(index) {
         return {
           command: 'command' + index,
           data: index
@@ -78,7 +78,7 @@ describe('Client', function() {
 
       client.batchSend(commands);
 
-      var writtenObject = JSON.parse(fakeSocket.write.secondCall.args[0]);
+      const writtenObject = JSON.parse(fakeSocket.write.secondCall.args[0]);
 
       assert(writtenObject.batch, 'The batch flag was not set');
       assert(_.isEqual(commands, writtenObject.commands));
@@ -89,7 +89,7 @@ describe('Client', function() {
 
   describe('.set() and .get()', function() {
 
-    var types = [_.random(1, 200), 'testing', {hello: 'world'}];
+    const types = [_.random(1, 200), 'testing', {hello: 'world'}];
 
     types.forEach(function(value) {
       it('can save and retrieve a(n) ' + typeof value, function() {
@@ -119,7 +119,7 @@ describe('Client', function() {
 
     it('runs the registered functions when data arrives', function() {
 
-      var stringCommand = JSON.stringify({command: 'test'});
+      const stringCommand = JSON.stringify({command: 'test'});
 
       fakeSocket = {
         dataHandler: sinon.stub(),
@@ -134,7 +134,7 @@ describe('Client', function() {
 
       client = new Client(fakeSocket);
 
-      var handlers = _.times(sinon.stub, _.random(3, 10));
+      const handlers = _.times(sinon.stub, _.random(3, 10));
       handlers.forEach(function(handler) {
         client.onData(handler);
       });
@@ -167,7 +167,7 @@ describe('Client', function() {
   describe('.tick', function() {
 
     it('throws an error when not in tick mode', function() {
-      var error;
+      let error;
       try {
         client.tick();
       } catch (e) {
@@ -205,7 +205,7 @@ describe('Client', function() {
 
       assert.isTrue(fakeSocket.write.calledTwice);
 
-      var sentObject = JSON.parse(fakeSocket.write.args[1]);
+      const sentObject = JSON.parse(fakeSocket.write.args[1]);
       assert.isTrue(sentObject.batch);
       assert.equal(sentObject.commands[0].command, 'test');
       assert.equal(sentObject.commands[1].command, 'test2');
