@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "istanbul cover _mocha",
-    "check-coverage": "istanbul check-coverage --statement 85",
-    "ci": "npm run lint && npm run test && npm run check-coverage"
+    "test": "nyc mocha",
+    "test:cov": "nyc --check-coverage --statement 80 --functions 80 --branches 80 --lines 80 nyc mocha",
+    "ci": "npm run lint && npm run test:cov"
   },
   "keywords": [
     "server",
@@ -35,7 +35,7 @@
     "chai": "3.5.0",
     "eslint": "2.7.0",
     "mocha": "2.4.5",
-    "sinon": "1.17.3",
-    "istanbul": "0.4.3"
+    "nyc": "^11.0.2",
+    "sinon": "1.17.3"
   }
 }
