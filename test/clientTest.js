@@ -1,3 +1,5 @@
+'use strict';
+
 const assert = require('chai').assert;
 const sinon = require('sinon');
 const Client = require('../lib/client.js');
