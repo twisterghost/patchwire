@@ -9,17 +9,17 @@ Multiplayer game server framework for Node.js
 ## Use
 ```JavaScript
 // MyGameServer.js
-var Server = require('patchwire').Server;
-var ClientManager = require('patchwire').ClientManager;
+const Server = require('patchwire').Server;
+const ClientManager = require('patchwire').ClientManager;
 
-var gameLobby = new ClientManager();
+const gameLobby = new ClientManager();
 gameLobby.on('clientAdded', function() {
     gameLobby.broadcast('chat', {
         message: 'A new player has joined the game.'
     });
 });
 
-var server = new Server(function(client) {
+const server = new Server(function(client) {
   gameLobby.addClient(client);
 });
 
