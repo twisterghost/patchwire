@@ -9,8 +9,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "nyc mocha",
-    "test:cov": "nyc --check-coverage --statement 80 --functions 80 --branches 80 --lines 80 nyc mocha",
+    "test": "nyc mocha -- --exit",
+    "test:cov": "nyc --check-coverage --statement 80 --functions 80 --branches 80 --lines 80 nyc mocha -- --exit",
     "ci": "npm run lint && npm run test:cov"
   },
   "keywords": [
