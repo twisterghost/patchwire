@@ -2,6 +2,10 @@
   "name": "patchwire",
   "version": "0.2.2",
   "description": "Multiplayer game server framework for Node.js",
+  "engines": {
+    "node": "^10.15.3",
+    "npm": "^6.4.1"
+  },
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
@@ -29,13 +33,13 @@
   "author": "Michael Barrett <twisterghost@gmail.com> (http://hellote.com/)",
   "license": "MIT",
   "dependencies": {
-    "lodash": "4.8.2"
+    "lodash": "^4.17.11"
   },
   "devDependencies": {
     "chai": "3.5.0",
     "eslint": "2.7.0",
-    "mocha": "2.4.5",
-    "nyc": "^11.0.2",
+    "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
     "sinon": "1.17.3"
   }
 }
