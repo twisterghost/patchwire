@@ -71,7 +71,7 @@ describe('Client', function() {
 
     it('sends every command in an array', function() {
 
-      const commands = _.times(_.random(5, 10), function(index) {
+      const commands = _.times(10, function(index) {
         return {
           command: 'command' + index,
           data: index
@@ -83,7 +83,7 @@ describe('Client', function() {
       const writtenObject = JSON.parse(fakeSocket.write.secondCall.args[0]);
 
       assert(writtenObject.batch, 'The batch flag was not set');
-      assert(_.isEqual(commands, writtenObject.commands));
+      assert.deepEqual(commands, writtenObject.commands);
 
     });
 
@@ -91,7 +91,7 @@ describe('Client', function() {
 
   describe('.set() and .get()', function() {
 
-    const types = [_.random(1, 200), 'testing', {hello: 'world'}];
+    const types = [1, true, 'testing', {hello: 'world'}];
 
     types.forEach(function(value) {
       it('can save and retrieve a(n) ' + typeof value, function() {
@@ -136,7 +136,7 @@ describe('Client', function() {
 
       client = new Client(fakeSocket);
 
-      const handlers = _.times(sinon.stub, _.random(3, 10));
+      const handlers = _.times(sinon.stub, 10);
       handlers.forEach(function(handler) {
         client.onData(handler);
       });

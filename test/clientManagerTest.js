@@ -77,7 +77,7 @@ describe('Client Manager', function() {
   describe('.getClientCount()', function() {
 
     it('returns the number of clients in the ClientManager', function() {
-      const clientCount = _.random(1, 200);
+      const clientCount = 100;
       _.times(clientCount, getFakeClient).forEach(clientManager.addClient.bind(clientManager));
       assert.equal(clientManager.getClientCount(), clientCount);
     });
@@ -86,7 +86,7 @@ describe('Client Manager', function() {
 
   describe('.set() and .get()', function() {
 
-    const types = [_.random(1, 200), 'testing', {hello: 'world'}];
+    const types = [1, true, 'testing', {hello: 'world'}];
 
     types.forEach(function(value) {
       it('can save and retrieve a(n) ' + typeof value, function() {
@@ -282,7 +282,7 @@ describe('Client Manager', function() {
         },
         onData: sinon.stub(),
         send: sinon.stub(),
-        clientId: _.random(0, 200),
+        clientId: 0,
         setTickMode: sinon.stub()
       };
 
