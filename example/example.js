@@ -20,6 +20,10 @@ gameManager.on('clientAdded', (client) => {
   });
 });
 
+gameManager.on('clientDropped', ({ client, reason }) => {
+  console.log('Client dropped:', client.clientId, reason);
+});
+
 const server = new GMServer(function (client) {
   client.addCommandListener('register', () => {
     console.log('Client is registering.');
