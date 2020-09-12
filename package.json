@@ -8,7 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "semistandard",
     "test": "mocha --exit",
     "ci": "npm run lint && npm run test"
   },
@@ -36,8 +36,7 @@
   },
   "devDependencies": {
     "chai": "4.2.0",
-    "eslint": "2.7.0",
     "mocha": "^8.1.3",
-    "sinon": "1.17.3"
+    "sinon": "^9.0.3"
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-env mocha */
 'use strict';
 
 const assert = require('chai').assert;
@@ -6,10 +7,10 @@ const _ = require('lodash');
 const ClientManager = require('../lib/clientManager.js');
 let clientManager;
 
-function getFakeClient() {
+function getFakeClient () {
   return {
-    on: function() {},
-    onData: function() {},
+    on: function () {},
+    onData: function () {},
     send: sinon.stub(),
     clientId: _.uniqueId(),
     setTickMode: sinon.stub(),
@@ -17,149 +18,130 @@ function getFakeClient() {
   };
 }
 
-describe('Client Manager', function() {
-
-  beforeEach(function() {
+describe('Client Manager', function () {
+  beforeEach(function () {
     clientManager = new ClientManager();
   });
 
-  describe('.addClient()', function() {
-
-    it('adds a client', function() {
+  describe('.addClient()', function () {
+    it('adds a client', function () {
       clientManager.addClient(getFakeClient());
       assert.equal(clientManager.getClientCount(), 1);
     });
-
   });
 
-  describe('.removeClient()', function() {
-
-    it('removes a client by an id', function() {
+  describe('.removeClient()', function () {
+    it('removes a client by an id', function () {
       const fakeSocket = getFakeClient();
       clientManager.addClient(fakeSocket);
       clientManager.removeClient(fakeSocket.clientId);
       assert.equal(clientManager.getClientCount(), 0);
     });
 
-    it('returns undefined when no matching client is found', function() {
+    it('returns undefined when no matching client is found', function () {
       const returnedClient = clientManager.removeClient(-1);
       assert.isUndefined(returnedClient);
     });
 
-    it('returns the client object it removes', function() {
+    it('returns the client object it removes', function () {
       let fakeClients = _.times(200, getFakeClient);
 
-      fakeClients.forEach(function(client) {
+      fakeClients.forEach(function (client) {
         clientManager.addClient(client);
       });
 
       fakeClients = _.shuffle(fakeClients);
 
-      fakeClients.forEach(function(client) {
+      fakeClients.forEach(function (client) {
         const returnedClient = clientManager.removeClient(client.clientId);
         assert.equal(returnedClient.clientId, client.clientId);
       });
-
     });
-
   });
 
-  describe('.getClients()', function() {
-
-    it('returns its client array', function() {
+  describe('.getClients()', function () {
+    it('returns its client array', function () {
       const fakeClients = _.times(10, getFakeClient);
       fakeClients.forEach(clientManager.addClient.bind(clientManager));
       assert.deepEqual(fakeClients, clientManager.getClients());
     });
-
   });
 
-  describe('.getClientCount()', function() {
-
-    it('returns the number of clients in the ClientManager', function() {
+  describe('.getClientCount()', function () {
+    it('returns the number of clients in the ClientManager', function () {
       const clientCount = 100;
       _.times(clientCount, getFakeClient).forEach(clientManager.addClient.bind(clientManager));
       assert.equal(clientManager.getClientCount(), clientCount);
     });
-
   });
 
-  describe('.set() and .get()', function() {
+  describe('.set() and .get()', function () {
+    const types = [1, true, 'testing', { hello: 'world' }];
 
-    const types = [1, true, 'testing', {hello: 'world'}];
-
-    types.forEach(function(value) {
-      it('can save and retrieve a(n) ' + typeof value, function() {
+    types.forEach(function (value) {
+      it('can save and retrieve a(n) ' + typeof value, function () {
         clientManager.set('testValue', value);
         assert.deepEqual(clientManager.get('testValue'), value);
       });
     });
-
   });
 
-  describe('.addCommandListener and .handleIncomingCommand()', function() {
-
-    it('routes commands to their handlers', function() {
+  describe('.addCommandListener and .handleIncomingCommand()', function () {
+    it('routes commands to their handlers', function () {
       const handlerStub = sinon.stub();
       clientManager.addCommandListener('test', handlerStub);
-      clientManager.handleIncomingCommand(getFakeClient(), {command: 'test'});
-      clientManager.handleIncomingCommand(getFakeClient(), {command: 'doNotRun'});
+      clientManager.handleIncomingCommand(getFakeClient(), { command: 'test' });
+      clientManager.handleIncomingCommand(getFakeClient(), { command: 'doNotRun' });
       assert(handlerStub.called, 'The registered command handler was never called');
       assert(handlerStub.calledOnce, 'The registered command handler was called too many times');
       assert.equal(handlerStub.firstCall.args[1].command, 'test',
         'The registered command handler was passed the wrong command');
     });
-
   });
 
-  describe('.broadcast()', function() {
-
-    it('can broadcast to all clients', function() {
+  describe('.broadcast()', function () {
+    it('can broadcast to all clients', function () {
       const fakeSocket = getFakeClient();
       const fakeSocket2 = getFakeClient();
 
       clientManager.addClient(fakeSocket);
       clientManager.addClient(fakeSocket2);
 
-      clientManager.broadcast({testing: true});
+      clientManager.broadcast({ testing: true });
 
       assert(fakeSocket.send.called);
       assert(fakeSocket2.send.called);
     });
 
-    it('allows for separate specification of the command', function() {
+    it('allows for separate specification of the command', function () {
       const fakeSocket = getFakeClient();
       const fakeSocket2 = getFakeClient();
 
       clientManager.addClient(fakeSocket);
       clientManager.addClient(fakeSocket2);
 
-      clientManager.broadcast('somecommand', {testing: true});
+      clientManager.broadcast('somecommand', { testing: true });
 
       assert(fakeSocket.send.called);
       assert(fakeSocket2.send.called);
       assert.equal(fakeSocket.send.firstCall.args[0].command, 'somecommand');
     });
-
   });
 
-  describe('.on() and .fire()', function() {
-
-    it('allows the author to define handlers for events', function() {
+  describe('.on() and .fire()', function () {
+    it('allows the author to define handlers for events', function () {
       const stub = sinon.stub();
       clientManager.on('testEvent', stub);
       clientManager.fire('testEvent');
       assert(stub.called);
     });
-
   });
 
-  describe('.setTickMode', function() {
-
-    it('sets the tick mode for the ClientManager and all of its Clients', function() {
+  describe('.setTickMode', function () {
+    it('sets the tick mode for the ClientManager and all of its Clients', function () {
       const clients = _.times(getFakeClient, 10);
 
-      clients.forEach(function(client) {
+      clients.forEach(function (client) {
         clientManager.addClient(client);
       });
 
@@ -168,7 +150,7 @@ describe('Client Manager', function() {
       assert.isTrue(clientManager.tickMode);
 
       let managedClients = clientManager.getClients();
-      managedClients.forEach(function(client) {
+      managedClients.forEach(function (client) {
         assert.isTrue(client.tickMode);
       });
 
@@ -177,29 +159,26 @@ describe('Client Manager', function() {
       assert.isFalse(clientManager.tickMode);
 
       managedClients = clientManager.getClients();
-      managedClients.forEach(function(client) {
+      managedClients.forEach(function (client) {
         assert.isFalse(client.tickMode);
       });
-
     });
 
-    it('stops ticking when already ticking and then set to off', function() {
+    it('stops ticking when already ticking and then set to off', function () {
       clientManager.setTickMode(true);
       clientManager.startTicking();
       clientManager.setTickMode(false);
       assert.isUndefined(clientManager.tickInterval);
     });
-
   });
 
-  describe('.setTickRate', function() {
-
-    it('sets the tick mode', function() {
+  describe('.setTickRate', function () {
+    it('sets the tick mode', function () {
       clientManager.setTickRate(200);
       assert.equal(clientManager.tickRate, 200);
     });
 
-    it('throws an error when already ticking', function() {
+    it('throws an error when already ticking', function () {
       clientManager.setTickMode(true);
       clientManager.startTicking();
 
@@ -213,18 +192,16 @@ describe('Client Manager', function() {
 
       assert.instanceOf(error, Error);
     });
-
   });
 
-  describe('.startTicking', function() {
-
-    it('starts ticking', function() {
+  describe('.startTicking', function () {
+    it('starts ticking', function () {
       clientManager.setTickMode(true);
       clientManager.startTicking();
       assert.isDefined(clientManager.tickInterval);
     });
 
-    it('throws an error if not in tick mode', function() {
+    it('throws an error if not in tick mode', function () {
       let error;
       try {
         clientManager.startTicking();
@@ -235,7 +212,7 @@ describe('Client Manager', function() {
       assert.instanceOf(error, Error);
     });
 
-    it('throws an error if already ticking', function() {
+    it('throws an error if already ticking', function () {
       clientManager.setTickMode(true);
       clientManager.startTicking();
       let error;
@@ -247,35 +224,29 @@ describe('Client Manager', function() {
 
       assert.instanceOf(error, Error);
     });
-
   });
 
-  describe('.tick', function() {
-
-    it('calls .tick on every client it has', function() {
-
+  describe('.tick', function () {
+    it('calls .tick on every client it has', function () {
       const clients = _.times(getFakeClient, 10);
 
-      clients.forEach(function(client) {
+      clients.forEach(function (client) {
         clientManager.addClient(client);
       });
 
       clientManager.tick();
 
       const managedClients = clientManager.getClients();
-      managedClients.forEach(function(client) {
+      managedClients.forEach(function (client) {
         assert.isTrue(client.tick.called);
       });
-
     });
-
   });
 
-  describe('event: clientDropped', function() {
-
-    it('removes the dropped client', function() {
+  describe('event: clientDropped', function () {
+    it('removes the dropped client', function () {
       const fakeClient = {
-        on: function(event, handler) {
+        on: function (event, handler) {
           if (event === 'close') {
             this.onCloseHandler = handler;
           }
@@ -291,9 +262,6 @@ describe('Client Manager', function() {
       fakeClient.onCloseHandler();
       const clientCount = clientManager.getClientCount();
       assert.equal(clientCount, 0);
-
     });
-
   });
-
 });

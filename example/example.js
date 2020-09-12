@@ -5,7 +5,6 @@ const gameManager = new ClientManager();
 
 gameManager.addCommandListener('register', (client) => {
   const playerId = Date.now().toString();
-  console.log("Player registered", playerId);
   client.set('playerId', playerId);
 
   client.send('register', {
@@ -13,22 +12,18 @@ gameManager.addCommandListener('register', (client) => {
   });
 });
 
-gameManager.addCommandListener('thing', (client) => {
-  console.log('thing');
-  client.send('thing', {});
-});
-
 gameManager.on('clientAdded', (client) => {
   console.log('Player connected.');
+
   client.send('joined', {
-    motd: 'Never pet a dog on fire',
+    motd: 'Never pet a dog on fire'
   });
 });
 
-const server = new GMServer(function(client) {
+const server = new GMServer(function (client) {
   gameManager.addClient(client);
 });
 
-server.listen(3001, function() {
+server.listen(3001, function () {
   console.info('Server is running');
 });
