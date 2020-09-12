@@ -21,6 +21,10 @@ gameManager.on('clientAdded', (client) => {
 });
 
 const server = new GMServer(function (client) {
+  client.addCommandListener('register', () => {
+    console.log('Client is registering.');
+  });
+
   gameManager.addClient(client);
 });
 

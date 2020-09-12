@@ -99,6 +99,17 @@ describe('Client Manager', function () {
     });
   });
 
+  describe('.removeCommandListener()', function () {
+    it('removes registered commands', function () {
+      const handlerStub = sinon.stub();
+      clientManager.addCommandListener('test', handlerStub);
+      clientManager.removeCommandListener('test', handlerStub);
+      clientManager.handleIncomingCommand(getFakeClient(), { command: 'test' });
+      clientManager.handleIncomingCommand(getFakeClient(), { command: 'doNotRun' });
+      assert(!handlerStub.called, 'The registered command handler was called');
+    });
+  });
+
   describe('.broadcast()', function () {
     it('can broadcast to all clients', function () {
       const fakeSocket = getFakeClient();

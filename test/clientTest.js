@@ -7,7 +7,7 @@ const Client = require('../lib/client.js');
 const _ = require('lodash');
 let client;
 let fakeSocket;
-const TERM_STR = '^X|X^';
+const TERM_STR = '\n\t\n';
 
 function getFakeNetSocket () {
   return {
