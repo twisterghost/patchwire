@@ -84,7 +84,7 @@ describe('Client', function () {
       fakeSocket = {
         dataHandler: sinon.stub(),
         fireData: function () {
-          this.dataHandler(new Buffer(stringCommand, 'ascii'));
+          this.dataHandler(Buffer.from(stringCommand, 'ascii'));
         },
         on: function (eventName, handler) {
           this.dataHandler = handler;
