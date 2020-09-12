@@ -1,6 +1,6 @@
 {
   "name": "patchwire",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Multiplayer game server framework for Node.js",
   "engines": {
     "node": "^12.18.3",
