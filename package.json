@@ -1,6 +1,6 @@
 {
   "name": "patchwire",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "description": "Multiplayer game server framework for Node.js",
   "engines": {
     "node": "^12.18.3",
@@ -29,7 +29,7 @@
     "index.js",
     "lib"
   ],
-  "author": "Michael Barrett <twisterghost@gmail.com> (http://hellote.com/)",
+  "author": "Michael Barrett <michaelbarrett@hey.com> (https://mjb.im/)",
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.20"
