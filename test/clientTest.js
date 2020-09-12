@@ -6,6 +6,7 @@ const Client = require('../lib/client.js');
 const _ = require('lodash');
 let client;
 let fakeSocket;
+const TERM_STR = '^X|X^';
 
 function getFakeNetSocket() {
   return {
@@ -28,10 +29,6 @@ describe('Client', function() {
       assert.equal(fakeSocket.on.firstCall.args[0], 'data');
     });
 
-    it('sends the "connected" command', function() {
-      assert.equal(fakeSocket.write.firstCall.args[0], JSON.stringify({command: 'connected'}));
-    });
-
   });
 
   describe('.send()', function() {
@@ -45,8 +42,7 @@ describe('Client', function() {
 
       client.send(commandObject);
 
-      // The first call is the connected command.
-      assert.equal(fakeSocket.write.secondCall.args[0], JSON.stringify(commandObject));
+      assert.equal(fakeSocket.write.firstCall.args[0], JSON.stringify(commandObject) + TERM_STR);
 
     });
 
@@ -57,34 +53,9 @@ describe('Client', function() {
       };
 
       client.send('test', commandObject);
-
       commandObject.command = 'test';
 
-      // The first call is the connected command.
-      assert.equal(fakeSocket.write.secondCall.args[0], JSON.stringify(commandObject));
-
-    });
-
-  });
-
-  describe('.batchSend()', function() {
-
-    it('sends every command in an array', function() {
-
-      const commands = _.times(10, function(index) {
-        return {
-          command: 'command' + index,
-          data: index
-        };
-      });
-
-      client.batchSend(commands);
-
-      const writtenObject = JSON.parse(fakeSocket.write.secondCall.args[0]);
-
-      assert(writtenObject.batch, 'The batch flag was not set');
-      assert.deepEqual(commands, writtenObject.commands);
-
+      assert.equal(fakeSocket.write.firstCall.args[0], JSON.stringify(commandObject) + TERM_STR);
     });
 
   });
@@ -183,38 +154,18 @@ describe('Client', function() {
       client.setTickMode(true);
       client.tick();
 
-      // Using .calledOnce to assert that only the 'connected' write happened.
-      assert.isTrue(fakeSocket.write.calledOnce);
+      assert.isFalse(fakeSocket.write.called);
     });
 
     it('sends all queued commands', function() {
       client.setTickMode(true);
       client.send({command: 'test'});
       client.send({command: 'test2'});
-      client.send({
-        batch: true,
-        commands: [
-          {
-            command: 'test3'
-          },
-          {
-            command: 'test4'
-          }
-        ]
-      });
 
       client.tick();
 
       assert.isTrue(fakeSocket.write.calledTwice);
-
-      const sentObject = JSON.parse(fakeSocket.write.args[1]);
-      assert.isTrue(sentObject.batch);
-      assert.equal(sentObject.commands[0].command, 'test');
-      assert.equal(sentObject.commands[1].command, 'test2');
-      assert.equal(sentObject.commands[2].command, 'test3');
-      assert.equal(sentObject.commands[3].command, 'test4');
     });
-
   });
 
 });

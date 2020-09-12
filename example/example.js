@@ -1,24 +1,31 @@
-var GMServer = require('../index.js').Server;
-var ClientManager = require('../index.js').ClientManager;
+const GMServer = require('../index.js').Server;
+const ClientManager = require('../index.js').ClientManager;
 
-var commandHandlers = {
+const gameManager = new ClientManager();
 
-  register: function(socket) {
-    var playerId = Date.now().toString();
-    socket.set('playerId', playerId);
+gameManager.addCommandListener('register', (client) => {
+  const playerId = Date.now().toString();
+  console.log("Player registered", playerId);
+  client.set('playerId', playerId);
 
-    socket.send('register', {
-      playerId: playerId
-    });
-  }
+  client.send('register', {
+    playerId: playerId
+  });
+});
 
-};
+gameManager.addCommandListener('thing', (client) => {
+  console.log('thing');
+  client.send('thing', {});
+});
 
-var gameManager = new ClientManager();
+gameManager.on('clientAdded', (client) => {
+  console.log('Player connected.');
+  client.send('joined', {
+    motd: 'Never pet a dog on fire',
+  });
+});
 
-gameManager.addCommandListener('register', commandHandlers.register);
-
-var server = new GMServer(function(client) {
+const server = new GMServer(function(client) {
   gameManager.addClient(client);
 });
 
