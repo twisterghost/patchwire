@@ -1,8 +1,6 @@
 # Patchwire
 Multiplayer game server framework for Node.js
 
-[![Build Status](https://travis-ci.org/twisterghost/patchwire.svg?branch=master)](https://travis-ci.org/twisterghost/patchwire)
-
 ## Install
 `npm install patchwire`
 
