@@ -12,7 +12,8 @@ const TERM_STR = '\n\t\n';
 function getFakeNetSocket () {
   return {
     on: sinon.stub(),
-    write: sinon.stub()
+    write: sinon.stub(),
+    setKeepAlive: sinon.stub(),
   };
 }
 
@@ -89,7 +90,9 @@ describe('Client', function () {
         on: function (eventName, handler) {
           this.dataHandler = handler;
         },
-        write: sinon.stub()
+        write: sinon.stub(),
+        setKeepAlive: sinon.stub(),
+        destroy: sinon.stub(),
       };
 
       client = new Client(fakeSocket);
